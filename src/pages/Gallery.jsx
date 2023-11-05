@@ -1,24 +1,19 @@
-import { useState } from "react";
-import img1 from "../assets/images/image-1.webp";
-import img2 from "../assets/images/image-2.webp";
-import img3 from "../assets/images/image-3.webp";
-import img4 from "../assets/images/image-4.webp";
-import img5 from "../assets/images/image-5.webp";
-import img6 from "../assets/images/image-6.webp";
-import img7 from "../assets/images/image-7.webp";
+import ImageComponent from "../components/ImageComponent";
 
-const Gallery = () => {
-  const [show, setShow] = useState(true);
-  const [checkedInp, setCheckedInp] = useState(true);
-  const [imgDivs, setImgDivs] = useState([
-    { id: 1, content: <img src={img1} alt="Image 1" /> },
-    { id: 2, content: <img src={img2} alt="Image 2" /> },
-    { id: 3, content: <img src={img3} alt="Image 3" /> },
-    { id: 4, content: <img src={img4} alt="Image 3" /> },
-    { id: 5, content: <img src={img5} alt="Image 3" /> },
-    { id: 6, content: <img src={img6} alt="Image 3" /> },
-    { id: 7, content: <img src={img7} alt="Image 3" /> },
-  ]);
+const Gallery = ({ imgDivs, setImgDivs }) => {
+  const handleImage = (e) => {
+    e.preventDefault();
+    let file = URL.createObjectURL(e.target.files[0]);
+    console.log(e.target.files, file);
+    setImgDivs([
+      ...imgDivs,
+      {
+        id: imgDivs.length + 1,
+        checked: false,
+        content: <img src={file} alt="new image" />,
+      },
+    ]);
+  };
 
   const handleDragStart = (e, id) => {
     e.dataTransfer.setData("text/plain", id);
@@ -54,47 +49,51 @@ const Gallery = () => {
     setImgDivs(updatedDivs);
   };
 
-  //handle Delete function
-  const handleDelete = (e, id) => {
-    console.log(e, id);
-  };
   const handleSelected = (e, id) => {
-    e.preventDefault();
-    setCheckedInp(!checkedInp);
+    let tempData = [];
+
+    imgDivs.forEach((element) => {
+      if (element.id === id) {
+        element.checked = e.target.checked;
+        tempData.push(element);
+      } else {
+        tempData.push(element);
+      }
+    });
+    setImgDivs(tempData);
   };
 
   return (
-    <div className="p-2 grid grid-cols-5 gap-2 text-black">
+    <div className="p-5 grid grid-cols-5 gap-5 text-black">
       {imgDivs.length &&
-        imgDivs.map((div, index) => (
-          <>
-            <div
-              key={div.id}
-              content={div.content}
-              draggable
-              className={`text-left w-full border-gray-30 border border-2 rounded-md hover:  ${
-                index === 0 ? " row-span-2 col-span-2" : ""
-              }`}
-              onDragStart={(e) => handleDragStart(e, div.id)}
-              onDragOver={(e) => handleDragEnd(e)}
-              onDrop={(e) => handleDrop(e, div.id)}
-            >
-              {show && (
-                <>
-                  <input
-                    className="text-left"
-                    type="checkbox"
-                    checked={checkedInp}
-                    onChange={(e) => handleSelected(e, div.id)}
-                    id={div.id}
-                  />
-                  <label htmlFor={div.id}></label>
-                </>
-              )}
-              {div.content}
-            </div>
-          </>
+        imgDivs.map((img, index) => (
+          <div
+            key={index + 10}
+            content={img.content}
+            draggable
+            className={`text-left w-full border-gray-30 border border-2 rounded-md relative ${
+              index === 0 ? " row-span-2 col-span-2" : ""
+            }`}
+            onDragStart={(e) => handleDragStart(e, img.id)}
+            onDragOver={(e) => handleDragEnd(e)}
+            onDrop={(e) => handleDrop(e, img.id)}
+          >
+            <ImageComponent
+              key={img.id}
+              handleSelected={handleSelected}
+              img={img}
+            />
+          </div>
         ))}
+      <div className="flex items-center align-middle border border-dashed border-2 rounded-md p-2">
+        <input
+          onChange={(e) => {
+            handleImage(e);
+          }}
+          type="file"
+          id="newImage"
+        />
+      </div>
     </div>
   );
 };

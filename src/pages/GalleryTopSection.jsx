@@ -1,6 +1,13 @@
 import React from "react";
 
-const GalleryTopSection = () => {
+const GalleryTopSection = ({ imgDivs, setImgDivs }) => {
+  const selectedFiles = imgDivs.filter((img) => img.checked === true);
+
+  //handle Delete function
+  const handleDelete = () => {
+    const restFiles = imgDivs.filter((img) => img.checked !== true);
+    setImgDivs(restFiles);
+  };
   return (
     <div className="flex justify-between px-10 items-center">
       <div>
@@ -10,10 +17,14 @@ const GalleryTopSection = () => {
           name="selectedFiles"
           id=""
         />
-        <span className="text-black">3 Files Selected</span>
+        <span className="text-black">
+          {selectedFiles.length} Files Selected
+        </span>
       </div>
 
-      <button className="text-red-600 py-5">Delete Files</button>
+      <button onClick={handleDelete} className="text-red-600 py-5">
+        Delete Files
+      </button>
     </div>
   );
 };
