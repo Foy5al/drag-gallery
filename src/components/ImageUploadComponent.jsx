@@ -2,7 +2,7 @@ import React from "react";
 
 const ImageUploadComponent = ({ handleImage }) => {
   return (
-    <div className="text-left w-full  border-gray-300 border-2 border-dashed rounded-md relative  bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+    <div className="text-left w-full  border-gray-300 border-2 border-dashed rounded-md relative  bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100  ">
       <label
         htmlFor="dropzone-file"
         className="flex flex-col items-center justify-center w-full h-64 rounded-lg cursor-pointer"

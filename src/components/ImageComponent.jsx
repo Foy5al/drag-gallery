@@ -21,16 +21,14 @@ const ImageComponent = ({ handleSelected, img }) => {
   };
 
   return (
-    <div
-      className="object-cover"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {show && (
         <>
           <div
-            className={`absolute top-0 left-0 w-full h-full z-10 rounded ${
-              img.checked ? "bg-gray-700 opacity-30 " : "bg-black opacity-50"
+            className={`ease-in-out delay-70 absolute top-0 left-0 w-full h-full z-10 rounded ${
+              img.checked
+                ? "bg-gray-700 opacity-30 "
+                : "bg-black opacity-50 hover:bg-black hover:opacity-40 hover:transition-all hover:scale-80"
             }`}
           ></div>
           <input
