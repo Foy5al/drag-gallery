@@ -1,4 +1,5 @@
 import ImageComponent from "../components/ImageComponent";
+import ImageUploadComponent from "../components/ImageUploadComponent";
 
 const Gallery = ({ imgDivs, setImgDivs }) => {
   const handleImage = (e) => {
@@ -49,6 +50,7 @@ const Gallery = ({ imgDivs, setImgDivs }) => {
     setImgDivs(updatedDivs);
   };
 
+  //handle selected items
   const handleSelected = (e, id) => {
     let tempData = [];
 
@@ -64,20 +66,21 @@ const Gallery = ({ imgDivs, setImgDivs }) => {
   };
 
   return (
-    <div className="p-5 grid grid-cols-5 gap-5 text-black">
+    <div className="p-5 grid grid-cols-2  md:grid-cols-3 lg:grid-cols-5 gap-5 text-black">
       {imgDivs.length &&
         imgDivs.map((img, index) => (
           <div
             key={index + 10}
             content={img.content}
             draggable
-            className={`text-left w-full border-gray-30 border border-2 rounded-md relative ${
+            className={`text-left w-full  border-gray-30 border border-2 rounded-md relative ${
               index === 0 ? " row-span-2 col-span-2" : ""
             }`}
             onDragStart={(e) => handleDragStart(e, img.id)}
             onDragOver={(e) => handleDragEnd(e)}
             onDrop={(e) => handleDrop(e, img.id)}
           >
+            {/* image components */}
             <ImageComponent
               key={img.id}
               handleSelected={handleSelected}
@@ -85,15 +88,8 @@ const Gallery = ({ imgDivs, setImgDivs }) => {
             />
           </div>
         ))}
-      <div className="flex items-center align-middle border border-dashed border-2 rounded-md p-2">
-        <input
-          onChange={(e) => {
-            handleImage(e);
-          }}
-          type="file"
-          id="newImage"
-        />
-      </div>
+      {/* image upload component */}
+      <ImageUploadComponent handleImage={handleImage} />
     </div>
   );
 };

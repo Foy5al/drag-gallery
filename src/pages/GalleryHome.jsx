@@ -29,12 +29,16 @@ const GalleryHome = () => {
   ]);
 
   return (
-    <div className="bg-white shadow-sm rounded">
-      {/* top section */}
-      <GalleryTopSection imgDivs={imgDivs} setImgDivs={setImgDivs} />
-      <hr />
-      <Gallery imgDivs={imgDivs} setImgDivs={setImgDivs} />
-    </div>
+    <section className="mt-5 ">
+      <div className="container mx-auto bg-white rounded-lg shadow">
+        {/* top section */}
+        <GalleryTopSection imgDivs={imgDivs} setImgDivs={setImgDivs} />
+        <hr />
+
+        {/* middle section */}
+        <Gallery imgDivs={imgDivs} setImgDivs={setImgDivs} />
+      </div>
+    </section>
   );
 };
 

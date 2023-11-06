@@ -21,10 +21,18 @@ const ImageComponent = ({ handleSelected, img }) => {
   };
 
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div
+      className="object-cover"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {show && (
         <>
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10 rounded-md"></div>
+          <div
+            className={`absolute top-0 left-0 w-full h-full z-10 rounded ${
+              img.checked ? "bg-gray-700 opacity-30 " : "bg-black opacity-50"
+            }`}
+          ></div>
           <input
             type="checkbox"
             onChange={(e) => handleCheckbox(e, img.id)}
